@@ -12,6 +12,7 @@ dist
 dist-ssr
 *.local
 dever.cmd
+builder.cmd
 
 # Editor directories and files
 .vscode/*

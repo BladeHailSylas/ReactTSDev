@@ -1,51 +1,38 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-
-const WritingPlace = () => {
-    return(
-    <div id="writing-place">
-        <label htmlFor="title" className="input-field">
-            <input id="title" type="text"></input>
-        </label>
-        <label htmlFor="content" className="input-field">
-            <textarea id="content" placeholder="content"></textarea>
-        </label>
-        <label htmlFor="password" className="input-field">
-            <input id="password" type="text"></input>
-        </label>
-        <label htmlFor="submit-button" className="input-field">
-            <input id="submit-button" type="submit" formMethod='post' value=""></input>
-        </label>
-    </div>
-);}
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+//import { Navbar } from "./components/common/Navbar";
+import Home from "./pages/Home";
+import ProfilePage from "./pages/ProfilePage";
+import RegisterForm from "./pages/RegisterForm";
+import LoginForm from "./pages/LoginForm";
+import { AuthProvider } from "./components/AuthProvider";
+import Layout from "./components/common/Layout";
+import PlayerListPage from "./pages/PlayerListPage";
+import PredictionPage from "./pages/PredictionPage";
+import ErrorPage from "./pages/ErrorPage";
+import NewsPage from "./pages/NewsPage";
 
 function App() {
-    const [count, setCount] = useState(0)
-
-    return (
-    <>
-        <div>
-        <a href="https://vite.dev" target="_blank">
-            <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-            <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-        </div>
-        <h1>Vite + React</h1>
-        <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-            count is {count}
-        </button>
-        <p className = "text-4xl font-bold text-blue-500">
-            Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-        </div>
-        <WritingPlace />
-    </>
-    )
+  return (
+    <div data-theme="dark">
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route element={<Layout />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/players" element={<PlayerListPage />} />
+              <Route path="/players/:id" element={<ProfilePage />} />
+              <Route path="/register" element={<RegisterForm />} />
+              <Route path="/login" element={<LoginForm />} />
+              <Route path="/predictions" element={<PredictionPage />} />
+              <Route path="/error/:status" element={<ErrorPage />} />
+              <Route path="news" element={<NewsPage />} />
+              <Route path="*" element={<ErrorPage />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
+    </div>
+  );
 }
 
-export default App
+export default App;
