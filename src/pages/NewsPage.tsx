@@ -1,5 +1,6 @@
-import type { NewsDto } from "../types/NewsDto";
+import { useParams } from "react-router-dom";
 
-export default function NewsPage({news} : {news: NewsDto}) {
-    return(<>{news.description}</>);
+export default function NewsPage() {
+    const link = useParams();
+    return(<>{link}</>);
 }

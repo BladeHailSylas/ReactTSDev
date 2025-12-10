@@ -6,7 +6,6 @@ import NewsBlock from "../components/news/NewsBlock";
 export default function NewsListPage() {
   const [news, setNews] = useState<NewsDto[]>([]);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     api.get("/news/olympic")
       .then((res) => setNews(res.data.items))
@@ -16,7 +15,7 @@ export default function NewsListPage() {
   if (loading) return <div className="p-6">불러오는 중...</div>;
 
   return (
-    <div className="w-full max-w-3xl bg-base-200 mx-auto p-4 space-y-4 rounded-xl">
+    <div className="w-full max-w-5xl bg-base-200 mx-auto p-4 space-y-4 rounded-xl">
       <h1 className="mx-2 text-2xl font-bold mb-4">늬우스</h1>
 
       {news.length === 0 && (
@@ -24,7 +23,7 @@ export default function NewsListPage() {
       )}
       {/* TODO: Add news blocks(Side & Main) */}
       {news.map((nw) => (
-        <NewsBlock key={nw.id} news={nw} />
+          <NewsBlock key={nw.id} news={nw}/>
       ))}
     </div>
   );

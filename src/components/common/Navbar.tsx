@@ -1,9 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
-import { Dropdown } from "./Dropdown";
+import { MenuDropdown } from "./MenuDropdown";
+import { SettingDropdown } from "./SettingDropdown";
 
 export function Navbar() {
-  const { isLoggedIn, username, logout } = useAuth();
+  const { isLoggedIn, username } = useAuth();
   const navigate = useNavigate();
 
   return (
@@ -11,23 +12,27 @@ export function Navbar() {
 
       {/* Hover 메뉴 그룹 */}
       <div className="flex-1">
-        <div className="mx-4 relative inline-block rounded-md bg-base-300 group">
-        {/* Anchor 역할 */}
-        <a className="text-xl cursor-pointer">☰ </a>
-        <a
-          className="font-bold text-xl cursor-pointer"
-          onClick={() => navigate("/")}
-        >
-          Paralympic Studio
-        </a>
+        <div className="inline-block group">
+          <div className="mx-4 relative flex gap-2 lg:gap-4 rounded-md bg-base-300 group">
+          {/* Anchor 역할 */}
+          <a className="m-2 lg:my-0 text-xl cursor-pointer">☰</a>
+          <a
+            className="font-bold text-xl cursor-pointer"
+            onClick={() => navigate("/")}
+          >
+            Paralympic Studio
+          </a>
+        </div>
         {/* Hover Dropdown */}
-        <Dropdown />
+        <MenuDropdown />
         </div>
       </div>
 
       {/* 로그인 / 로그아웃 영역 */}
-      <div className="flex-none gap-3">
-        {isLoggedIn && localStorage.getItem('token') ? (
+      <div className="flex-none gap-3 group">
+        {isLoggedIn && <span className="font-semibold">{username?.split('@')[0]}님 <a className="m-2 lg:my-0 text-xl cursor-pointer">☰</a> </span>}
+        <SettingDropdown />
+        {/*isLoggedIn && localStorage.getItem('token') ? (
           <>
             <span className="font-semibold">{username?.split('@')[0]}님 </span>
             <button className="btn btn-sm" onClick={logout}>
@@ -38,7 +43,7 @@ export function Navbar() {
           <button className="btn btn-sm" onClick={() => navigate("/login")}>
             로그인
           </button>
-        )}
+        )*/}
       </div>
     </div>
   );

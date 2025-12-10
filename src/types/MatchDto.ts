@@ -6,4 +6,5 @@ export interface MatchDto {
   description: string;
   predictionOpen: boolean;
   alreadyPredicted: boolean;
+  yourPrevResult: string;
 }

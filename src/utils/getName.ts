@@ -1,4 +1,6 @@
-export default function getName(rawName : string){
+export default function getName(rawName : string, replacable: string | null = null){
     //more logic if required
-    return rawName.split('@')[0];
+    const spliter = rawName.split('@')[0];
+    if(spliter === rawName && replacable !== null) return replacable;
+    return spliter;
 }

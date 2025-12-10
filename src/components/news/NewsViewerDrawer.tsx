@@ -93,7 +93,7 @@ export default function NewsViewerDrawer({ selected, onClose } : Props) {
             원문 보기
           </a>
           <button className="btn w-full mt-2 bg-base-200" onClick={onClose}>
-            닫기
+            접기
           </button>
         </div>
       </div>

@@ -5,9 +5,10 @@ import { useState } from "react";
 export default function PredictionCard({ match }: { match: MatchDto }) {
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(match.alreadyPredicted);
+  const [prev, setPrev] = useState(match.yourPrevResult);
 
   const handlePredict = async ( result : "HOME_WIN" | "AWAY_WIN") => {
-    if (loading) return;
+    if (loading || result === prev) return;
     setLoading(true);
     try {
       await api.post("/predictions", {
@@ -15,6 +16,7 @@ export default function PredictionCard({ match }: { match: MatchDto }) {
       predictedResult: result,
     });
       setDone(true);
+      setPrev(result);
     } catch (e : any) {
       console.error(e);
       alert("예측 실패: " + e.message);
@@ -22,51 +24,57 @@ export default function PredictionCard({ match }: { match: MatchDto }) {
       setLoading(false);
     }
   };
-
+  const getPrevTeam = (raw : string) => {
+    switch(raw) {
+      case "HOME_WIN":
+        return match.teamA;
+        break;
+      case "AWAY_WIN":
+        return match.teamB;
+        break;
+      default:
+        return "";
+        break;
+    }
+  }
   return (
     <div className="card bg-base-100 shadow-lg p-5 border border-base-300 mt-4">
-      <h1 className="text-2xl font-bold">{match.teamA} vs. {match.teamB}</h1>
-      <p className="text-base-content/60 text-sm mt-1">
-        경기 날짜: {new Date(match.matchDate).toLocaleString()}
-        <h2 className="text-2xl font-bold mb-4">{match.description ?? "Fight!"}</h2>
-      </p>
-
+      <p className="text-base-content/60 text-xs text-center mt-1">{new Date(match.matchDate).toLocaleString()}</p>
+      <h1 className="text-xl font-bold text-center">{match.teamA} vs. {match.teamB}</h1>
+      <h2 className="text-sm font-bold text-center">{match.description ?? "Fight!"}</h2>
       {done ? (
-        <p className="text-green-500 font-semibold mt-3">
-          ✔ 이미 예측한 경기입니다.
+        <p className="text-green-500 font-semibold m-3 text-center">
+          ✔ 예측한 경기({getPrevTeam(prev)})
         </p>
-      ) : !match.predictionOpen ? (
+      ) : 
+      <p className="font-semibold m-3 text-center">
+          &nbsp;
+        </p>}
+      {!match.predictionOpen ? (
         <p className="text-red-500 font-semibold mt-3">
-          ❌ 예측이 마감되었습니다.
+          ❌ 예측 마감
         </p>
       ) : (
         <div>
           {loading ? <div className="text-center w-full">처리 중...</div> : 
             <div className="grid grid-cols-2 gap-4">
               <button
-                className="btn btn-primary bg-base-200 btn-outline w-full"
+                className={`btn btn-primary text-xs font-semibold bg-base-200 w-full`}
                 disabled={loading}
                 onClick={() => handlePredict("HOME_WIN")}
               >
-                홈팀 승리
+                {match.teamA} 승리
               </button>
               <button
-                className="btn btn-primary bg-base-200 btn-outline w-full"
+                className="btn btn-error text-xs font-semibold bg-base-200 w-full"
                 disabled={loading}
                 onClick={() => handlePredict("AWAY_WIN")}
               >
-                어웨이 승리
+                {match.teamB} 승리
               </button>
             </div>
           }
         </div>
-        /*<button
-          onClick={handlePredict}
-          className="btn btn-primary mt-4 w-full"
-          disabled={loading}
-        >
-          {loading ? "처리 중..." : "승부예측 하기"}
-        </button>*/
       )}
     </div>
   );

@@ -14,9 +14,9 @@ import LoginLayout from "./components/common/LoginLayout";
 import ProtectedRoute from "./components/Auth/ProtectedRoute";
 import SocialLoginPage from "./pages/SocialLoginPage";
 import UnprotectingRoute from "./components/Auth/UnprotectingRoute";
-import LivePage from "./pages/LivePage";
-import LiveList from "./pages/LiveList";
+import LiveListPage from "./pages/LiveList";
 import NewPlayerPage from "./pages/NewPlayerPage";
+import MyPage from "./pages/MyPage";
 
 function App() {
   return (
@@ -32,8 +32,10 @@ function App() {
                 <Route path="/predictions" element={<PredictionPage />} />
                 <Route path="/error/:status" element={<ErrorPage />} />
                 <Route path="/news" element={<NewsListPage />} />
-                <Route path="/live" element={<LiveList />} />
-                <Route path="/live/:videoId" element={<LivePage />} />
+                <Route path="/live" element={<LiveListPage />} />
+                <Route path="/my" element={<MyPage />} />
+                <Route path="/*" element={<ErrorPage />} />
+                <Route path="*" element={<ErrorPage />} />
               </Route>
             <Route element={<LoginLayout />}>
               <Route path="/register" element={<RegisterForm />} />

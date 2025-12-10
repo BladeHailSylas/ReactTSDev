@@ -24,8 +24,6 @@ export default function ProfileCreatePage() {
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
 
-  //const summaryCache = useRef(new Map<string, string>()); // 향후 필요시
-
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
