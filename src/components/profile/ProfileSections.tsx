@@ -30,7 +30,7 @@ export default function ProfileSections({player}: {player : Player}) {
                 {award || <br />}
               </li>
             );
-          }) : <li className="list-none"></li>}
+          }) : <li className="list-none">...</li>}
         </ul>
       </div>
       <div className="bg-base-200 rounded-xl shadow p-6">

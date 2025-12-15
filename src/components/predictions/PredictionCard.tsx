@@ -6,7 +6,8 @@ export default function PredictionCard({ match }: { match: MatchDto }) {
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(match.alreadyPredicted);
   const [prev, setPrev] = useState(match.yourPrevResult);
-
+  const [home, setHome] = useState(match.homePercent);
+  const [away, setAway] = useState(match.awayPercent);
   const handlePredict = async ( result : "HOME_WIN" | "AWAY_WIN") => {
     if (loading || result === prev) return;
     setLoading(true);
@@ -17,6 +18,15 @@ export default function PredictionCard({ match }: { match: MatchDto }) {
     });
       setDone(true);
       setPrev(result);
+      switch(result) {
+        case "HOME_WIN":
+          setHome(Math.min(match.homePercent + 4, 100));
+          setAway(Math.max(match.awayPercent - 4, 0));
+          break;
+        case "AWAY_WIN":
+          setAway(Math.min(match.awayPercent + 4, 100));
+          setHome(Math.max(match.homePercent - 4, 0));
+      }
     } catch (e : any) {
       console.error(e);
       alert("예측 실패: " + e.message);
@@ -42,6 +52,10 @@ export default function PredictionCard({ match }: { match: MatchDto }) {
       <p className="text-base-content/60 text-xs text-center mt-1">{new Date(match.matchDate).toLocaleString()}</p>
       <h1 className="text-xl font-bold text-center">{match.teamA} vs. {match.teamB}</h1>
       <h2 className="text-sm font-bold text-center">{match.description ?? "Fight!"}</h2>
+      <div className="flex w-full h-2 m-2 rounded overflow-hidden">
+        <div className={match.homePercent >= match.awayPercent ? `bg-blue-700` : `bg-blue-400`} style={{ flexGrow: home }}></div>
+        <div className={match.homePercent > match.awayPercent ? "bg-red-400" : "bg-red-700"} style={{ flexGrow: away }}></div>
+      </div>
       {done ? (
         <p className="text-green-500 font-semibold m-3 text-center">
           ✔ 예측한 경기({getPrevTeam(prev)})

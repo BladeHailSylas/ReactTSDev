@@ -13,7 +13,7 @@ export default function PredictionPage() {
   }, []);
 
   if (loading) return <div className="p-6">불러오는 중...</div>;
-
+  
   return (
     <div className="w-full max-w-5xl bg-base-200 mx-auto p-4 space-y-4 rounded-xl">
       <h1 className="mx-2 text-2xl font-bold mb-4">승부 예측</h1>

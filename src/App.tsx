@@ -14,7 +14,7 @@ import LoginLayout from "./components/common/LoginLayout";
 import ProtectedRoute from "./components/Auth/ProtectedRoute";
 import SocialLoginPage from "./pages/SocialLoginPage";
 import UnprotectingRoute from "./components/Auth/UnprotectingRoute";
-import LiveListPage from "./pages/LiveList";
+import LiveListPage from "./pages/LiveListPage";
 import NewPlayerPage from "./pages/NewPlayerPage";
 import MyPage from "./pages/MyPage";
 

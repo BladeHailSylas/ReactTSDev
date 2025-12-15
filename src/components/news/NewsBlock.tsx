@@ -36,7 +36,7 @@ export default function NewsBlock({news} : {news : NewsDto}) {
         });
     }
     return (
-      <a className="card bg-base-100 shadow-lg p-5 border border-base-300 mt-4">
+      <div className="card bg-base-100 shadow-lg p-5 border border-base-300 mt-4">
         <div>
           <h1 className="text-2xl font-bold">{news.title}</h1>
           <p className="text-base-content/60 text-sm mt-1">
@@ -79,8 +79,8 @@ export default function NewsBlock({news} : {news : NewsDto}) {
             </button>
           </div>
           : 
-          <a className="btn w-full mt-2 bg-base-200" onClick={() => setExpand(true)}>더보기</a>}
+          <div className="btn w-full mt-2 bg-base-200" onClick={() => setExpand(true)}>더보기</div>}
         </div>
-    </a>
+    </div>
   );
 }

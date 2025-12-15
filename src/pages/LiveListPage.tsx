@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { api } from "../api/axiosInstance";
 import type { LiveDto } from "../types/LiveDto";
-import YtPlayer from "../components/Stream/YtPlayer";
+import YtCard from "../components/Stream/YtCard";
 
 export default function LiveListPage() {
   const [onLive, setOnLive] = useState(false);
@@ -15,10 +15,6 @@ export default function LiveListPage() {
         })
       .finally(() => setLoading(false));
   }, []);
-  const openYouTube = (videoId : string) => {
-    if(videoId === null || videoId === undefined) return;
-    return (`https://www.youtube.com/watch?v=${videoId}`);
-  };
   if (loading) return <div className="p-6">불러오는 중...</div>;
 
   return (
@@ -29,16 +25,7 @@ export default function LiveListPage() {
       )}
       <div className="w-full grid grid-cols-1 lg:grid-cols-2">
         {videos != undefined && videos.map(video => (
-          <a className="card bg-base-100 shadow cursor-pointer m-4" href={openYouTube(video.videoId)} target="_blank" rel="noopener noreferrer">
-            <div className="card-body p-4">
-              <div className="flex">
-                <YtPlayer videoId={video.videoId} />
-              </div>
-              <div className="divider my-2" />
-              <h3 className="text-2xl text-center font-bold">{video.title}</h3>
-              <p className="text-center">{video.channelName}</p>
-            </div>
-          </a>
+          < YtCard key={video.videoId} video={video} />
         ))}
       </div>
     </div>

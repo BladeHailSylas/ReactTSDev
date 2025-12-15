@@ -4,6 +4,7 @@ export default function Home() {
       <div className="bg-base-100 rounded-xl shadow p-6 text-base-content/60 text-center">
         피드 기능이 아직 준비되지 않았습니다.
         <div className="bg-base-200 my-6 rounded-xl shadow p-6">
+          게시글이 여기 들어갈 것이다
         </div>
       </div>
     </div>
