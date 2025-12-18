@@ -6,7 +6,7 @@ export default function PredictionCard({ match, interactive = true }: { match: M
   const percent = (kid: number, mom: number, full: boolean = false) => {
     if(mom + kid === 0 && full) return 100;
     else if(mom + kid === 0) return 0;
-    else return (kid / (kid + mom));
+    else return Math.round(100 * kid / (kid + mom));
   }
   const getPrevTeam = (raw : string) => {
     switch(raw) {
@@ -38,9 +38,9 @@ export default function PredictionCard({ match, interactive = true }: { match: M
         bet: bet,
       });
       setDone(true);
-      setHomePercent(percent(res.data.homeAmount, res.data.awayAmount));
+      setHomePercent(percent(res.data.homeAmount, res.data.awayAmount, true));
       setAwayPercent(percent(res.data.awayAmount, res.data.homeAmount));
-      prevBet.current = bet;
+      prevBet.current = Math.min(bet, res.data.yourPrevBet);
       setPrev(result);
     } catch (e : any) {
       console.error(e);
@@ -54,13 +54,17 @@ export default function PredictionCard({ match, interactive = true }: { match: M
       <p className="text-base-content/60 text-xs text-center mt-1">{new Date(match.matchDate).toLocaleString()}</p>
       <h1 className="text-xl font-bold text-center">{match.teamA} vs. {match.teamB}</h1>
       <h2 className="text-sm font-bold text-center">{match.description ?? "Fight!"}</h2>
+      <div className={interactive === true ? "flex w-full h-2 m-2 rounded" : "flex w-full m-2 rounded"}>
+        <div className={prev === "HOME_WIN" ? "flex flex-1 text-green-400" : "flex flex-1"}>{homePercent} %</div>
+        <div className={prev === "AWAY_WIN" ? "flex text-green-400" : "flex"}>{awayPercent} %</div>
+      </div>
       <div className="flex w-full h-2 m-2 rounded overflow-hidden">
         <div className={homePercent > awayPercent ? `bg-blue-700` : `bg-blue-400`} style={{ flexGrow: homePercent }}></div>
         <div className={homePercent > awayPercent ? "bg-red-400" : "bg-red-700"} style={{ flexGrow: awayPercent }}></div>
       </div>
       {done ? (
-        <p className="text-green-500 font-semibold m-3 text-center">
-          ✔ 예측한 경기({getPrevTeam(prev)}, {prevBet.current})
+        <p className="text-green-400 font-semibold m-3 text-center">
+          ✔ 예측한 경기({getPrevTeam(prev)}, {prevBet.current} 포인트)
         </p>
       ) : 
       <p className="font-semibold m-3 text-center">
@@ -74,6 +78,7 @@ export default function PredictionCard({ match, interactive = true }: { match: M
         <div>
           {interactive ? (loading ? <div className="text-center w-full">처리 중...</div> : 
           <div className="flex flex-col">
+            <p className="text-xs">포인트로 참가하기</p>
             <input className="m-2 input input-bordered" value={bet} onChange={(e) => {
               const n = parseInt(e.target.value);
               if(isNaN(n)) setBet(1);

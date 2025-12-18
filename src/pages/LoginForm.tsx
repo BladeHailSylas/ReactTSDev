@@ -24,13 +24,16 @@ export default function LoginForm() {
       const res = await axios.post("/api/auth/login", { username, password });
       const token = res.data.token;
       if (token) {
-        login(token, username, null);
+        login(token, username, null, res.data.point);
+        //const userRes = await axios.get("/api/user/my");
+        //login(token, userRes.data.username, userRes.data.email, userRes.data.point);
         // TODO: alert 대신 toast UI로 변경 가능
         alert("로그인 성공!");
         navigate("/");
       }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (_) {
+    } catch (err: any) {
+      console.log(err);
       setError("로그인 실패. 아이디 또는 비밀번호를 확인하세요.");
     }
   };

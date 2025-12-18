@@ -6,6 +6,7 @@ import { type MatchDto } from "../types/MatchDto";
 export default function PredictionPage() {
   const [matches, setMatches] = useState<MatchDto[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showAbout, setAbout] = useState(false);
   useEffect(() => {
     api.get("/predictions/matches")
       .then((res) => setMatches(res.data))
@@ -16,8 +17,15 @@ export default function PredictionPage() {
   
   return (
     <div className="w-full max-w-5xl bg-base-200 mx-auto p-4 space-y-4 rounded-xl">
-      <h1 className="mx-2 text-2xl font-bold mb-4">승부 예측</h1>
-
+      <div className="flex flex-row">
+        <h1 className="mx-2 mt-1 text-2xl font-bold">승부 예측</h1>
+        <div className="btn mx-2 text-2xl font-bold bg-base-100" onClick={() => setAbout(showAbout !== true)}>?</div>
+      </div>
+      {showAbout === true && <div className=" position-absolute p-4 bg-base-100 rounded-lg border border-base-300">
+        <p className="font-bold">이 페이지에서는 각 경기마다 승리할 팀을 예측하고 포인트를 걸어 보상을 받을 수 있습니다.</p>
+        <p className="font-bold">예측하는 팀과 거는 포인트를 수정할 수 있으며, 포인트는 경기 종료 후에 계산됩니다.</p>
+        <p className="font-bold">경기 시작 10분 전부터는 투표할 수 없게 되므로 유의하시기 바랍니다.</p>
+        </div>}
       {matches.length === 0 && (
         <p className="text-base-content/60">예측 가능한 경기가 없습니다.</p>
       )}

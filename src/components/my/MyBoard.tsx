@@ -5,7 +5,7 @@ import PostElement from "../post/PostElement";
 export default function MyPrediction({post} : {post: BoardDto}){
     const navigate = useNavigate();
     return(
-        <a className="cursor-pointer" onClick={ () => navigate(`/players/${post.playerId}`)}>
+        <a className="cursor-pointer" onClick={ () => navigate(`/players/${post.playerId}#comment`)}>
                 <PostElement comment={post} interactive={false}/>
             </a>
     )

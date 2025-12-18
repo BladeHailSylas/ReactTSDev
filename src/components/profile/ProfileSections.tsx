@@ -1,17 +1,29 @@
 // src/components/Main/ProfileSections.tsx
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {type Player} from "../../types/Player"
 import PostBox from "../post/PostBox";
+import { useLocation } from "react-router-dom";
 
 export default function ProfileSections({player}: {player : Player}) {
   const [open, setOpen] = useState(true);
+  const location = useLocation();
   const enclose = () => setOpen(open !== true)
+  useEffect(() => {
+    if (!location.hash) return;
+
+    const id = location.hash.replace("#", "");
+    const el = document.getElementById(id);
+
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [location.hash]);
   return (
     <section className="space-y-6">
       <div className="bg-base-200 rounded-xl shadow p-6">
         <div className="flex">
           <h2 className="text-2xl lg:text-4xl font-semibold flex-1">수상 경력</h2>
-          <div className="text-lg btn m-4 mt-0 bg-base-100" onClick={enclose}>펼치기/접기</div>
+          <div className="text-lg btn m-4 mt-0 bg-base-100" onClick={enclose}>{open === true ? "접기" : "펼치기"}</div>
         </div>
         <div className="divider my-4"></div>
         <ul className="list-disc ml-6 mt-2 text-lg text-base-content/70">

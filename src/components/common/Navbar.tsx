@@ -4,7 +4,7 @@ import { MenuDropdown } from "./MenuDropdown";
 import { SettingDropdown } from "./SettingDropdown";
 
 export function Navbar() {
-  const { isLoggedIn, username } = useAuth();
+  const { isLoggedIn, username, point } = useAuth();
   const navigate = useNavigate();
 
   return (
@@ -29,7 +29,7 @@ export function Navbar() {
 
       {/* 로그인 / 로그아웃 영역 */}
       <div className="flex-none gap-3 group">
-        {isLoggedIn && <span className="font-semibold">{username?.split('@')[0]}님 <a className="m-2 lg:my-0 text-xl cursor-pointer">☰</a> </span>}
+        {isLoggedIn && <span className="font-semibold">{username?.split('@')[0]}님 ({point !== null ? point : 0} 포인트) <a className="m-2 lg:my-0 text-xl cursor-pointer">☰</a> </span>}
         <SettingDropdown />
         {/*isLoggedIn && localStorage.getItem('token') ? (
           <>

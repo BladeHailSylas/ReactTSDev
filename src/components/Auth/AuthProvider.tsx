@@ -7,6 +7,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loginToken, setLoginToken] = useState<string | null>(null);
   const [username, setUsername] = useState<string | null>(null);
   const [email, setEmail] = useState<string | null>(null);
+  const [point, setPoint] = useState<number| null>(null);
   const [isAuthReady, setIsAuthReady] = useState(false);
 
   // JWT exp 체크 함수
@@ -21,22 +22,28 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   // 앱 시작 시 localStorage에서 인증 복원
   useEffect(() => {
+    if(isLoggedIn) return; // 이미 로그인 상태면 무시
     const token = localStorage.getItem("token");
     const savedUser = localStorage.getItem("username");
-    if (token && !isTokenExpired(token) && savedUser) {
+    //const point = Number(localStorage.getItem("point"));
+    if(token || savedUser) api.get("/user/checkToken").catch(() => {logout();});
+    if (token && !isTokenExpired(token)) {
       api.defaults.headers.common.Authorization = `Bearer ${token}`;
       setIsLoggedIn(true);
       setLoginToken(token);
       setUsername(savedUser);
+      //setPoint(point);
     }
 
     setIsAuthReady(true); // 초기 인증 체크 완료
   }, []);
 
-  const login = (token: string, username: string, email: string | null) => {
+  const login = (token: string, username: string, email: string | null, point: number | null) => {
     localStorage.setItem("token", token);
     localStorage.setItem("username", username);
+    localStorage.setItem("point", (point !== null && point !== undefined) ? point.toString() : "0");
     setEmail(email);
+    setPoint(point);
     api.defaults.headers.common.Authorization = `Bearer ${token}`;
     setIsLoggedIn(true);
     setLoginToken(token);
@@ -52,6 +59,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     localStorage.removeItem("token");
     localStorage.removeItem("username");
+    localStorage.removeItem("point");
 
     setIsLoggedIn(false);
     setLoginToken(null);
@@ -67,6 +75,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         loginToken,
         username,
         email,
+        point,
         isAuthReady,
         login,
         logout,

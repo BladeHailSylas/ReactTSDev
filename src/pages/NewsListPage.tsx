@@ -5,6 +5,7 @@ import NewsBlock from "../components/news/NewsBlock";
 
 export default function NewsListPage() {
   const [news, setNews] = useState<NewsDto[]>([]);
+  const [desc, setDesc] = useState(true);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     api.get("/news/olympic")
@@ -18,8 +19,9 @@ export default function NewsListPage() {
       <div className="flex flex-row">
         <h1 className="mx-2 text-2xl font-bold mb-4 flex-1">늬우스</h1>
         <h1 className="btn mx-2 text-2xl font-bold mb-4" onClick={() => {
+          setDesc(desc !== true)
           setNews(prev => [...prev].reverse());
-        }}>뉴스 뒤집기</h1>
+        }}>{desc === true ? "보는 중: 최신" : "보는 중: 이전"}</h1>
       </div>
       {news.length === 0 && (
         <p className="text-base-content/60">뉴스를 받아올 수 없었습니다.</p>
