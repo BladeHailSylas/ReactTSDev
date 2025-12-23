@@ -1,19 +1,15 @@
 //import { useState } from "react";
-import { useAuth } from "../../hooks/useAuth";
-import { AdminNavbar } from "./Admin/AdminNavbar";
-import { Navbar } from "./Navbar";
+import { AdminNavbar } from "./AdminNavbar";
 //import SideContainer from "./SideContainer";
 //import NewsViewerDrawer from "../news/NewsViewerDrawer";
 import { Outlet } from "react-router-dom";
 //import type { NewsDto } from "../../types/NewsDto";
 
-export default function Layout() {
-  const {username} = useAuth();
+export default function AdminLayout() {
   //const [selectedNews, setSelectedNews] = useState<NewsDto | null>(null);
   return (
     <div className="flex flex-col min-h-screen">
-      {username === "admin" ? <AdminNavbar /> : <Navbar />} {/* Temporary admin check, should be removed later */}
-
+      <AdminNavbar />
       {/* {<NewsViewerDrawer selected={selectedNews} onClose={() => setSelectedNews(null)} />*/}
 
       <div className="flex flex-1 px-4 lg:px-8 gap-6 mt-4">

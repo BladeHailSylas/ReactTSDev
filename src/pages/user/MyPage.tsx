@@ -1,12 +1,12 @@
-import { api } from "../api/axiosInstance";
+import { api } from "../../api/axiosInstance";
 import { useEffect, useState } from "react";
-import type { UserDto } from "../types/UserDto";
-import getName from "../utils/getName";
-import type { PredictDto } from "../types/PredictDto";
-import type { BoardDto } from "../types/BoardDto";
-import MyPrediction from "../components/my/MyPrediction";
-import MyBoard from "../components/my/MyBoard";
-import Galaxy from "../../public/galaxy.jpg";
+import type { UserDto } from "../../types/UserDto";
+import getName from "../../utils/getName";
+import type { PredictDto } from "../../types/PredictDto";
+import type { BoardDto } from "../../types/BoardDto";
+import MyPrediction from "../../components/my/MyPrediction";
+import MyBoard from "../../components/my/MyBoard";
+import Galaxy from "../../../public/galaxy.jpg";
 
 export default function MyPage() {
     const [user, setUser] = useState<UserDto | null>(null);
@@ -16,6 +16,7 @@ export default function MyPage() {
     const [openBrd, setOpenBrd] = useState(true);
     const [loading, setLoading] = useState(true);
     const handleProvider = (provider: string ) => {
+        if(user?.admin === true && user?.username === 'admin') return "관리자";
         switch(provider){
             case "GOOGLE":
                 return "Google 유저";
@@ -54,7 +55,7 @@ export default function MyPage() {
       setLoading(false);
     });
   }, []);
-
+  // Should require this many?
 
   if (loading) {
     return <div className="p-6">불러오는 중...</div>;
@@ -84,7 +85,7 @@ export default function MyPage() {
                 <div className="flex-1">내 승부예측</div>
                 <div className="btn btn-lg text-2xl mb-2" onClick={() => setOpenPre(!openPre)}>{openPre === true ? "접기" : "펼치기"}</div>
               </div>
-              {myPre !== null && openPre ? myPre.map(predict => <MyPrediction key={predict.id} predict={predict}/>) : <div className="text-center">...</div>}
+              {(myPre !== null && openPre) ? myPre.map(predict => <MyPrediction key={predict.id} predict={predict}/>) : <div className="text-center">...</div>}
             </div>
           </section>
           <section id="my-boards">

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function SocialLoginPage() {
   const [params] = useSearchParams();
@@ -11,7 +11,7 @@ export default function SocialLoginPage() {
 
   useEffect(() => {
     if (token && username) {
-      login(token, username, null); //temporarily null, should fix later
+      login(token, username, null, null); //temporarily null, should fix later
       navigate("/");
     }
   }, [token, username]);

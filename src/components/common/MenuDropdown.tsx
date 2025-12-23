@@ -21,6 +21,20 @@ export function MenuDropdown() {
 
           <button
             className="text-left px-4 py-3 hover:bg-base-200 rounded-b-xl"
+            onClick={() => navigate("/")}
+          >
+            게시판
+          </button>
+
+          <button
+            className="text-left px-4 py-3 hover:bg-base-200 rounded-b-xl"
+            onClick={() => navigate("/")}
+          >
+            동영상
+          </button>
+
+          <button
+            className="text-left px-4 py-3 hover:bg-base-200 rounded-b-xl"
             onClick={() => navigate("/live")}
           >
             생중계

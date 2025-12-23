@@ -1,9 +1,9 @@
-import ProfileHeader from "../components/profile/ProfileHeader";
-import ProfileSections from "../components/profile/ProfileSections";
+import ProfileHeader from "../../components/profile/ProfileHeader";
+import ProfileSections from "../../components/profile/ProfileSections";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { fetchPlayerById } from "../api/PlayerApi";
-import { type Player } from "../types/Player";
+import { fetchPlayerById } from "../../api/PlayerApi";
+import { type Player } from "../../types/Player";
 
 export default function ProfilePage() {
   const { id } = useParams();

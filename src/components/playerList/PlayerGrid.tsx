@@ -2,12 +2,10 @@ import { useEffect, useState } from "react";
 import PlayerCard from "./PlayerCard";
 import { fetchAllPlayers } from "../../api/PlayerApi";
 import { type Player } from "../../types/Player";
-import { useNavigate } from "react-router-dom";
 
 export default function PlayerGrid() {
   const [players, setPlayers] = useState<Player[]>([]);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
   useEffect(() => {
     fetchAllPlayers()
       .then((data) => {
@@ -33,7 +31,6 @@ export default function PlayerGrid() {
           // [중요] PlayerCard에 age 값을 전달합니다.
         />
       ))}
-      <div className="btn btn-secondary bg-base-200" onClick={() => {navigate('/players/new')}}>+ 새 선수</div>
     </div>
   );
 }

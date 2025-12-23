@@ -1,4 +1,4 @@
-import PlayerGrid from "../components/playerList/PlayerGrid";
+import PlayerGrid from "../../components/playerList/PlayerGrid";
 
 export default function PlayerListPage() {
   return (

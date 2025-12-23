@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { api } from "../api/axiosInstance";
-import {type NewsDto} from "../types/NewsDto";
-import NewsBlock from "../components/news/NewsBlock";
+import { api } from "../../api/axiosInstance";
+import {type NewsDto} from "../../types/NewsDto";
+import NewsBlock from "../../components/news/NewsBlock";
 
 export default function NewsListPage() {
   const [news, setNews] = useState<NewsDto[]>([]);

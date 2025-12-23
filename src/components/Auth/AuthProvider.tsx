@@ -39,6 +39,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const login = (token: string, username: string, email: string | null, point: number | null) => {
+    if(email === null && point === null) {
+      api.get("/user/my")
+      .then((res) => {
+        email = res.data.email;
+        point = res.data.point;;
+        setEmail(email);
+        setPoint(point);
+      })
+      .catch((e: any) => {console.error(e);});
+    }
     localStorage.setItem("token", token);
     localStorage.setItem("username", username);
     localStorage.setItem("point", (point !== null && point !== undefined) ? point.toString() : "0");

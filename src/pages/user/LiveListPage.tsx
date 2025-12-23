@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { api } from "../api/axiosInstance";
-import type { LiveDto } from "../types/LiveDto";
-import YtCard from "../components/Stream/YtCard";
+import { api } from "../../api/axiosInstance";
+import type { LiveDto } from "../../types/LiveDto";
+import YtCard from "../../components/Youtube/LiveCard";
 
 export default function LiveListPage() {
   const [onLive, setOnLive] = useState(false);

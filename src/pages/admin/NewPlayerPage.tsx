@@ -1,5 +1,5 @@
 import { useState, } from "react";
-import { api } from "../api/axiosInstance";
+import { api } from "../../api/axiosInstance";
 import { useNavigate } from "react-router-dom";
 
 interface AwardGroup {
@@ -114,7 +114,7 @@ export default function ProfileCreatePage() {
     }
       await api.post("/players", formData);
       setMessage("프로필이 등록되었습니다!");
-      navigate(`/players`); // 필요 시 활성화
+      navigate(`/admin/players`); // 필요 시 활성화
 
     } catch (err) {
       console.error(err);

@@ -1,22 +1,28 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 //import { Navbar } from "./components/common/Navbar";
-import Home from "./pages/Home";
-import ProfilePage from "./pages/ProfilePage";
-import RegisterForm from "./pages/RegisterForm";
-import LoginForm from "./pages/LoginForm";
+import Home from "./pages/user/Home";
+import ProfilePage from "./pages/user/ProfilePage";
+import RegisterForm from "./pages/unauthenticated/RegisterForm";
+import LoginForm from "./pages/unauthenticated/LoginForm";
 import { AuthProvider } from "./components/Auth/AuthProvider";
 import Layout from "./components/common/Layout";
-import PlayerListPage from "./pages/PlayerListPage";
-import PredictionPage from "./pages/PredictionPage";
+import PlayerListPage from "./pages/user/PlayerListPage";
+import PredictionPage from "./pages/user/PredictionPage";
 import ErrorPage from "./pages/ErrorPage";
-import NewsListPage from "./pages/NewsListPage";
+import NewsListPage from "./pages/user/NewsListPage";
 import LoginLayout from "./components/common/LoginLayout";
 import ProtectedRoute from "./components/Auth/ProtectedRoute";
-import SocialLoginPage from "./pages/SocialLoginPage";
+import SocialLoginPage from "./pages/unauthenticated/SocialLoginPage";
 import UnprotectingRoute from "./components/Auth/UnprotectingRoute";
-import LiveListPage from "./pages/LiveListPage";
-import NewPlayerPage from "./pages/NewPlayerPage";
-import MyPage from "./pages/MyPage";
+import LiveListPage from "./pages/user/LiveListPage";
+import NewPlayerPage from "./pages/admin/NewPlayerPage";
+import MyPage from "./pages/user/MyPage";
+import AdminRoute from "./components/Auth/AdminRoute";
+import AdminLayout from "./components/common/Admin/AdminLayout";
+import AdminPlayerList from "./pages/admin/AdminPlayerList";
+import AdminPrediction from "./pages/admin/AdminPrediction";
+import NewMatchPage from "./pages/admin/NewMatchPage";
+import PlayerEditPage from "./pages/admin/PlayerEditPage";
 
 function App() {
   return (
@@ -24,19 +30,26 @@ function App() {
       <AuthProvider>
         <BrowserRouter>
           <Routes>
-              <Route element={<ProtectedRoute><Layout /></ProtectedRoute>}>
-                <Route path="/" element={<Home />} />
-                <Route path="/players" element={<PlayerListPage />} />
-                <Route path="/players/new" element={<NewPlayerPage />} />
-                <Route path="/players/:id" element={<ProfilePage />} />
-                <Route path="/predictions" element={<PredictionPage />} />
-                <Route path="/error/:status" element={<ErrorPage />} />
-                <Route path="/news" element={<NewsListPage />} />
-                <Route path="/live" element={<LiveListPage />} />
-                <Route path="/my" element={<MyPage />} />
-                <Route path="/*" element={<ErrorPage />} />
-                <Route path="*" element={<ErrorPage />} />
-              </Route>
+            <Route element={<AdminRoute><AdminLayout /></AdminRoute>}>
+              <Route path="/admin" element={<div>관리자 대시보드</div>} />
+              <Route path="/admin/players" element={<AdminPlayerList />} />
+              <Route path="/admin/players/new" element={<NewPlayerPage />} />
+              <Route path="/admin/players/edit/:id" element={<PlayerEditPage />} />
+              <Route path="/admin/predictions" element={<AdminPrediction />} />
+              <Route path="/admin/predictions/new" element={< NewMatchPage />} />
+            </Route>
+            <Route element={<ProtectedRoute><Layout /></ProtectedRoute>}>
+              <Route path="/" element={<Home />} />
+              <Route path="/players" element={<PlayerListPage />} />
+              <Route path="/players/:id" element={<ProfilePage />} />
+              <Route path="/predictions" element={<PredictionPage />} />
+              <Route path="/error/:status" element={<ErrorPage />} />
+              <Route path="/news" element={<NewsListPage />} />
+              <Route path="/live" element={<LiveListPage />} />
+              <Route path="/my" element={<MyPage />} />
+              <Route path="/*" element={<ErrorPage />} />
+              <Route path="*" element={<ErrorPage />} />
+            </Route>
             <Route element={<LoginLayout />}>
               <Route path="/register" element={<RegisterForm />} />
               <Route path="/login" element={<UnprotectingRoute><LoginForm /></UnprotectingRoute>} />

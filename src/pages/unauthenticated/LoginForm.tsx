@@ -1,10 +1,10 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
-import GoogleIcon from "../../public/Google__G__logo.svg";
-import KakaoIcon from "../../public/Kakao_Corp._symbol_-_2012.svg";
-import NaverIcon from "../../public/Naver_logo.png";
+import { useAuth } from "../../hooks/useAuth";
+import GoogleIcon from "../../../public/Google__G__logo.svg";
+import KakaoIcon from "../../../public/Kakao_Corp._symbol_-_2012.svg";
+import NaverIcon from "../../../public/Naver_logo.png";
 
 export default function LoginForm() {
   const [username, setUsername] = useState("");
